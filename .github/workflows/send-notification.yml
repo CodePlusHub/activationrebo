@@ -8,7 +8,11 @@ on:
 jobs:
   notify:
     runs-on: ubuntu-latest
+
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
       - name: Extract commit message
         id: extract
         run: |
