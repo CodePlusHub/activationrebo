@@ -25,6 +25,6 @@ jobs:
       - name: Send POST to Google Apps Script
         if: steps.extract.outputs.email != ''
         run: |
-          curl -X POST https://script.google.com/macros/s/AKfycbxOxTZhSbWUDtfBoA2yHCJ2vEW4Nnu7kDQzYa4HC9uZqJf8sYDMlaSbR0TgW9wrwVCiLg/exec \
+          curl -X POST https://script.google.com/macros/s/AKfycbzfp3Lu2p4eBjCQAPIvext_VCstvvIRe36PK7TW2waeSpqK-6DGlO1I8gLbbCOYxYpl/exec \
             -H "Content-Type: application/json" \
             -d "{\"deployment_status\": \"success\", \"deployment_trigger\": {\"metadata\": {\"commit_message\": \"notify:$EMAIL\"}}}"
