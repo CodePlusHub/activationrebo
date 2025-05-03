@@ -1,0 +1,26 @@
+name: Notify Gmail from Commit
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract commit message
+        id: extract
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=format:%s)
+          echo "Commit message: $COMMIT_MSG"
+          EMAIL=$(echo "$COMMIT_MSG" | grep -oP 'notify[:=]\s*\K[^\s]+')
+          echo "Found email: $EMAIL"
+          echo "email=$EMAIL" >> $GITHUB_OUTPUT
+
+      - name: Send POST to Google Apps Script
+        if: steps.extract.outputs.email != ''
+        run: |
+          curl -X POST https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec \
+            -H "Content-Type: application/json" \
+            -d "{\"deployment_status\": \"success\", \"deployment_trigger\": {\"metadata\": {\"commit_message\": \"notify:$EMAIL\"}}}"
