@@ -22,9 +22,9 @@ jobs:
           echo "Found email: $EMAIL"
           echo "email=$EMAIL" >> $GITHUB_OUTPUT
 
-      - name: Send POST to Google Apps Script
+      - name: Send GET to Google Apps Script
         if: steps.extract.outputs.email != ''
         run: |
-          curl -L -X POST https://script.google.com/macros/s/AKfycbzfp3Lu2p4eBjCQAPIvext_VCstvvIRe36PK7TW2waeSpqK-6DGlO1I8gLbbCOYxYpl/exec \
-            -H "Content-Type: application/json" \
-            -d "{\"deployment_status\": \"success\", \"deployment_trigger\": {\"metadata\": {\"commit_message\": \"notify:${{ steps.extract.outputs.email }}\"}}}"
+          curl -G "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec" \
+            --data-urlencode "email=${{ steps.extract.outputs.email }}" \
+            --data-urlencode "commit_message=notify:${{ steps.extract.outputs.email }}"
