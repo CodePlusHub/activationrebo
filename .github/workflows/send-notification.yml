@@ -25,6 +25,6 @@ jobs:
       - name: Send GET to Google Apps Script
         if: steps.extract.outputs.email != ''
         run: |
-          curl -G "https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec" \
+          curl -G "https://script.google.com/macros/s/AKfycby9uWtGP79uEBqGhfUqSzBA7JFYLWxIwRPD6IFp2h4l2jDrguk8W-nWHbniGvApPoW5DQ/exec" \
             --data-urlencode "email=${{ steps.extract.outputs.email }}" \
             --data-urlencode "commit_message=notify:${{ steps.extract.outputs.email }}"
